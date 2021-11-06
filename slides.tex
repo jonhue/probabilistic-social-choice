@@ -120,26 +120,35 @@ Given \begin{itemize}
         \end{tabular}\end{center}
 \end{itemize}\vspace{8pt}\pause
 
-find a \b{social choice function} $f : \mathcal{R}_A\only<5->{\footnote{$\mathcal{R}_A = \Delta(\mathcal{L}(A))$ is the set of all preference profiles over A.}} \to A$ that returns a single alternative\pause,
+find a \b{social choice function} $f : \mathcal{R}_A\only<5->{\footnote{$\mathcal{R}_A = \Delta(\mathcal{L}(A))$ is the set of all preference profiles over $A$. Here, $\mathcal{L}(A)$ is the set of all linear preference relations over $A$ and $\Delta(S)$ is the set of all probability distributions over $S$.}} \to A$ that returns a single alternative\pause,
 
 \g{i.e., identifies a place for lunch that is in $A$.}
 \end{frame}
 
 \begin{frame}{Framework of Social Choice}
+$R(a \succ b)$ is the fraction of the electorate that prefers $a$ to $b$.\pause \\[15pt]
 
+\begin{example}
+\begin{columns}
+\begin{column}{0.5\textwidth}
 \begin{center}\begin{tabular}{ c|c|c } 
  $\nicefrac{1}{3}$ & $\nicefrac{1}{3}$ & $\nicefrac{1}{3}$ \\ 
  \hline\hline
  K & M & F \\ 
  M & F & K \\ 
  F & K & M \\
-\end{tabular}\end{center}\vspace{10pt}
+\end{tabular}\end{center}
+\end{column}
+\begin{column}{0.5\textwidth}
+\begin{flalign*}
+    \g{R(K \succ M)}\ &\g{=\pause \nicefrac{2}{3}} &\\
+    \g{R(M \succ F)}\ &\g{=\pause \nicefrac{2}{3}} &\\
+    \g{R(F \succ K)}\ &\g{=\pause \nicefrac{2}{3}} &
+\end{flalign*}
 
-$R(a \succ b)$ is the fraction of the electorate that prefers $a$ to $b$.\pause \\[10pt]
-
-\begin{center}
-\g{$R(K \succ M)\pause = \nicefrac{2}{3}$.}
-\end{center}
+\end{column}
+\end{columns}
+\end{example}
 \end{frame}
 
 \subsection{Condorcet Consistency}
