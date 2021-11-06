@@ -37,6 +37,7 @@
 \usepackage{tabularx}
 \usepackage{caption}
 \usepackage{nicefrac}
+\usepackage{tikz}
 
 \captionsetup{labelformat=empty}
 
@@ -110,11 +111,11 @@ Given \begin{itemize}
     \item an \b{electorate} \g{(Ava, Ben, and Chloe)}\pause,
     \item a set of \b{alternatives} $A\ \g{= \{\text{foodLAB}, \text{Klara's Kitchen}, \text{Mensa}\}}$\pause,
     \item a \b{preference profile} $R$ over $A$\pause \\[8pt]
-        \begin{center}\begin{tabular}{ c|c|c }
-         $\nicefrac{1}{3}$ & $\nicefrac{1}{3}$ & $\nicefrac{1}{3}$ \\
+        \begin{center}\begin{tabular}{ c|c|c } 
+         $\nicefrac{1}{3}$ & $\nicefrac{1}{3}$ & $\nicefrac{1}{3}$ \\ 
          \hline\hline
-         K & M & F \\
-         M & F & K \\
+         K & M & F \\ 
+         M & F & K \\ 
          F & K & M \\
         \end{tabular}\end{center}
 \end{itemize}\vspace{8pt}\pause
@@ -126,11 +127,11 @@ find a \b{social choice function} $f : \mathcal{R}_A\only<5->{\footnote{$\mathca
 
 \begin{frame}{Framework of Social Choice}
 
-\begin{center}\begin{tabular}{ c|c|c }
- $\nicefrac{1}{3}$ & $\nicefrac{1}{3}$ & $\nicefrac{1}{3}$ \\
+\begin{center}\begin{tabular}{ c|c|c } 
+ $\nicefrac{1}{3}$ & $\nicefrac{1}{3}$ & $\nicefrac{1}{3}$ \\ 
  \hline\hline
- K & M & F \\
- M & F & K \\
+ K & M & F \\ 
+ M & F & K \\ 
  F & K & M \\
 \end{tabular}\end{center}\vspace{10pt}
 
@@ -168,13 +169,40 @@ $f$ is \b{Condorcet consistent} if it always chooses the Condorcet winner provid
 \end{frame}
 
 \begin{frame}{Framework of Social Choice}
-\begin{center}\begin{tabular}{ c|c|c }
- $\nicefrac{1}{3}$ & $\nicefrac{1}{3}$ & $\nicefrac{1}{3}$ \\
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{center}\begin{tabular}{ c|c|c } 
+ $\nicefrac{1}{3}$ & $\nicefrac{1}{3}$ & $\nicefrac{1}{3}$ \\ 
  \hline\hline
- K & M & F \\
- M & F & K \\
+ K & M & F \\ 
+ M & F & K \\ 
  F & K & M \\
-\end{tabular}\end{center}\pause
+\end{tabular}\end{center}
+\end{column}
+\begin{column}{0.5\textwidth}
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Straight Lines [id:da006979237897732471] 
+\onslide<1->{\draw [color=red  ,draw opacity=1 ]   (186.52,146.05) -- (231.52,146.05) ;}
+%Straight Lines [id:da015439588280161676] 
+\onslide<3->{\draw [color=blue  ,draw opacity=1 ]   (181.52,95.05) -- (150.52,133.05) ;}
+%Straight Lines [id:da9956392230048516] 
+\onslide<2->{\draw [color=green  ,draw opacity=1 ]   (234.52,95.05) -- (267.52,134.05) ;}
+
+% Text Node
+\onslide<1->{\draw (127,138) node [anchor=north west][inner sep=0.75pt]  [color=red  ,opacity=1 ]  {$K\succ M$};}
+% Text Node
+\onslide<2->{\draw (242,138) node [anchor=north west][inner sep=0.75pt]  [color=green  ,opacity=1 ]  {$M\succ F$};}
+% Text Node
+\onslide<3->{\draw (186,75) node [anchor=north west][inner sep=0.75pt]  [color=blue  ,opacity=1 ]  {$F\succ K$};}
+
+
+\end{tikzpicture}
+\end{column}
+\end{columns}\pause\pause\pause\vspace{10pt}
 
 The preferences of Ava, Ben, and Chloe do not yield a Condorcet~winner (known as the Condorcet paradox).\pause \\[20pt]
 
@@ -196,11 +224,11 @@ Formally, $f : \mathcal{R}_A \to \mathcal{P}(\Delta(A))$ where $\Delta(A)$ is th
 \begin{example}[random dictatorship]
 Choose a preference relation among all preference relations uniformly at random, and choose its most-preferred alternative.
 
-\begin{center}\begin{tabular}{ c|c|c }
- $\nicefrac{1}{3}$ & $\nicefrac{1}{3}$ & $\nicefrac{1}{3}$ \\
+\begin{center}\begin{tabular}{ c|c|c } 
+ $\nicefrac{1}{3}$ & $\nicefrac{1}{3}$ & $\nicefrac{1}{3}$ \\ 
  \hline\hline
- \r{K} & \r{M} & \r{F} \\
- \o{M} & \o{F} & \o{K} \\
+ \r{K} & \r{M} & \r{F} \\ 
+ \o{M} & \o{F} & \o{K} \\ 
  \o{F} & \o{K} & \o{M} \\
 \end{tabular}\end{center}
 \end{example}
@@ -221,29 +249,29 @@ $\implies$ deterministic social choice functions are a special case of probabili
 \begin{frame}{Consistency Axioms}
 \begin{columns}
 \begin{column}{0.25\textwidth}
-\begin{center}\begin{table}\begin{tabular}{ c|c }
- $\nicefrac{1}{2}$ & $\nicefrac{1}{2}$ \\
+\begin{center}\begin{table}\begin{tabular}{ c|c } 
+ $\nicefrac{1}{2}$ & $\nicefrac{1}{2}$ \\ 
  \hline\hline
- K & M \\
- M & F \\
+ K & M \\ 
+ M & F \\ 
  F & K \\
 \end{tabular}\caption{$R'$}\end{table}\end{center}
 \end{column}
 \begin{column}{0.25\textwidth}
-\begin{center}\begin{table}\begin{tabular}{ c|c }
- $\nicefrac{1}{2}$ & $\nicefrac{1}{2}$ \\
+\begin{center}\begin{table}\begin{tabular}{ c|c } 
+ $\nicefrac{1}{2}$ & $\nicefrac{1}{2}$ \\ 
  \hline\hline
- K & M \\
- F & F \\
+ K & M \\ 
+ F & F \\ 
  M & K \\
 \end{tabular}\caption{$R''$}\end{table}\end{center}
 \end{column}\pause
 \begin{column}{0.5\textwidth}
-\begin{center}\begin{table}\begin{tabular}{ c|c|c }
- $\nicefrac{1}{4}$ & $\nicefrac{1}{4}$ & $\nicefrac{1}{2}$ \\
+\begin{center}\begin{table}\begin{tabular}{ c|c|c } 
+ $\nicefrac{1}{4}$ & $\nicefrac{1}{4}$ & $\nicefrac{1}{2}$ \\ 
  \hline\hline
- K & K & M \\
- M & F & F \\
+ K & K & M \\ 
+ M & F & F \\ 
  F & M & K \\
 \end{tabular}\caption{$\nicefrac{1}{2} R' + \nicefrac{1}{2} R'' = R$}\end{table}\end{center}
 \end{column}
@@ -266,30 +294,30 @@ Instead of proposing to go to Mensa, he introduces separate \b{clones} $B = \{M1
 
 \begin{columns}
 \begin{column}{0.33\textwidth}
-\begin{center}\begin{table}\begin{tabular}{ c|c|c }
- $\nicefrac{1}{3}$ & $\nicefrac{1}{3}$ & $\nicefrac{1}{3}$ \\
+\begin{center}\begin{table}\begin{tabular}{ c|c|c } 
+ $\nicefrac{1}{3}$ & $\nicefrac{1}{3}$ & $\nicefrac{1}{3}$ \\ 
  \hline\hline
- K & M1 & F \\
- M1 & M2 & K \\
- M2 & F & M2 \\
+ K & M1 & F \\ 
+ M1 & M2 & K \\ 
+ M2 & F & M2 \\ 
  F & K & M1 \\
 \end{tabular}\caption{$R$}\end{table}\end{center}
 \end{column}\pause
 \begin{column}{0.33\textwidth}
-\begin{center}\begin{table}\begin{tabular}{ c|c|c }
- $\nicefrac{1}{3}$ & $\nicefrac{1}{3}$ & $\nicefrac{1}{3}$ \\
+\begin{center}\begin{table}\begin{tabular}{ c|c|c } 
+ $\nicefrac{1}{3}$ & $\nicefrac{1}{3}$ & $\nicefrac{1}{3}$ \\ 
  \hline\hline
- K & M1 & F \\
- M1 & F & K \\
+ K & M1 & F \\ 
+ M1 & F & K \\ 
  F & K & M1 \\
 \end{tabular}\caption{$R|_{A'}$ \\ $A' = \{F, M1, K\}$}\end{table}\end{center}
 \end{column}
 \begin{column}{0.33\textwidth}
-\begin{center}\begin{table}\begin{tabular}{ c|c }
- $\nicefrac{2}{3}$ & $\nicefrac{1}{3}$ \\
+\begin{center}\begin{table}\begin{tabular}{ c|c } 
+ $\nicefrac{2}{3}$ & $\nicefrac{1}{3}$ \\ 
  \hline\hline
- M1 & M2 \\
- M2 & M1 \\
+ M1 & M2 \\ 
+ M2 & M1 \\ 
 \end{tabular}\caption{$R|_B$ \\ $B = \{M1, M2\}$}\end{table}\end{center}
 \end{column}
 \end{columns}\pause
@@ -306,30 +334,30 @@ $\implies$ consistency with respect to components of \emph{similar} alternatives
 \begin{frame}{Consistency Axioms}
 \begin{columns}
 \begin{column}{0.33\textwidth}
-\begin{center}\begin{table}\begin{tabular}{ c|c|c }
- $\nicefrac{1}{3}$ & $\nicefrac{1}{3}$ & $\nicefrac{1}{3}$ \\
+\begin{center}\begin{table}\begin{tabular}{ c|c|c } 
+ $\nicefrac{1}{3}$ & $\nicefrac{1}{3}$ & $\nicefrac{1}{3}$ \\ 
  \hline\hline
- K & M1 & F \\
- M1 & M2 & K \\
- M2 & F & M2 \\
+ K & M1 & F \\ 
+ M1 & M2 & K \\ 
+ M2 & F & M2 \\ 
  F & K & M1 \\
 \end{tabular}\caption{$R$}\end{table}\end{center}
 \end{column}
 \begin{column}{0.33\textwidth}
-\begin{center}\begin{table}\begin{tabular}{ c|c|c }
- $\nicefrac{1}{3}$ & $\nicefrac{1}{3}$ & $\nicefrac{1}{3}$ \\
+\begin{center}\begin{table}\begin{tabular}{ c|c|c } 
+ $\nicefrac{1}{3}$ & $\nicefrac{1}{3}$ & $\nicefrac{1}{3}$ \\ 
  \hline\hline
- K & M1 & F \\
- M1 & F & K \\
+ K & M1 & F \\ 
+ M1 & F & K \\ 
  F & K & M1 \\
 \end{tabular}\caption{$R|_{A'}$ \\ $A' = \{F, M1, K\}$}\end{table}\end{center}
 \end{column}
 \begin{column}{0.33\textwidth}
-\begin{center}\begin{table}\begin{tabular}{ c|c }
- $\nicefrac{2}{3}$ & $\nicefrac{1}{3}$ \\
+\begin{center}\begin{table}\begin{tabular}{ c|c } 
+ $\nicefrac{2}{3}$ & $\nicefrac{1}{3}$ \\ 
  \hline\hline
- M1 & M2 \\
- M2 & M1 \\
+ M1 & M2 \\ 
+ M2 & M1 \\ 
 \end{tabular}\caption{$R|_B$ \\ $B = \{M1, M2\}$}\end{table}\end{center}
 \end{column}
 \end{columns}
@@ -400,7 +428,7 @@ Empirically, there often exists a Condorcet winner. If there exists no Condorcet
  rules out lotteries might lead to dominance by the center, even if
  the right and left could put together a majority coalition that would
  prefer a lottery on the extremes to a middle outcome. (\cite{Zeckhauser1969})}\pause
-
+ 
 In general, majority rule without lotteries corrects towards the median choice.\par
 This can be considered inefficient or desirable. The judgement may depend on the setting.
 \end{frame}
