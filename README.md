@@ -1,19 +1,14 @@
 ---
 layout: primer_without_heading
-title: Publicly share LaTeX sources
+title: Probabilistic Social Choice
 ---
 
-# Publicly share LaTeX sources
+# Probabilistic Social Choice
 
-1. Clone this template
-2. [Setup GitHub Pages deployments](https://github.com/peaceiris/actions-gh-pages#%EF%B8%8F-create-ssh-deploy-key)
-3. List all `.tex` files you want to compile in `.github/workflows/publish.yml`
-4. Enable GitHub Pages at the root directory in your `master` branch
+These are the slides of a talk targeted at a wider audience I gave at the Computational Social Choice seminar at ETH Zurich.
 
-From now on, the `master` branch will host your deployed files while you commit your changes to `sources`.
+It is about a great paper ["Consistent Probabilistic Social Choice"](https://arxiv.org/abs/1503.00694) by Florian Brandl, Felix Brandt, and Hans Georg Seedig.
 
-You may do additional setup work in `scripts/setup.sh`.
+It turns out that in many scenarios, lotteries over alternatives are a great method to achieve _ex ante_ fairness given that preferences are aggregated repeatedly. In the talk, we discuss the theoretical findings of the paper as well as their wider implications.
 
-## Documents
-
-* [example](https://jonhue.github.io/latex/example.pdf)
+[Slides](https://jonhue.github.io/probabilistic-social-choice/slides.pdf)

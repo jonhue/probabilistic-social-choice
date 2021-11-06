@@ -1,0 +1,449 @@
+\documentclass{beamer}
+%
+% Choose how your presentation looks.
+%
+% For more themes, color themes and font themes, see:
+% http://deic.uab.es/~iblanes/beamer_gallery/index_by_theme.html
+%
+\mode<presentation>
+{
+    \usetheme{default}      % or try Darmstadt, Madrid, Warsaw, ...
+    \usecolortheme{default} % or try albatross, beaver, crane, ...
+    \usefonttheme{default}  % or try serif, structurebold, ...
+    \setbeamertemplate{navigation symbols}{}
+    \setbeamertemplate{caption}[numbered]
+    \setbeamertemplate{footline}[frame number]
+    \setbeamertemplate{itemize items}[circle]
+    \setbeamertemplate{theorems}[]
+    \setbeamercolor*{structure}{bg=white,fg=blue}
+    \setbeamerfont{block title}{size=\normalsize}
+    \setbeamertemplate{frametitle continuation}{}
+}
+
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{definition}
+\newtheorem{algorithm}[theorem]{Algorithm}
+\newtheorem{idea}[theorem]{Idea}
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{aligned-overset}
+\usepackage{alltt}
+\usepackage{amsmath}
+\usepackage{csquotes}
+\usepackage{multicol}
+\usepackage{stmaryrd}
+\usepackage{tabularx}
+\usepackage{caption}
+\usepackage{nicefrac}
+
+\captionsetup{labelformat=empty}
+
+\renewcommand\tabularxcolumn[1]{m{#1}}
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X}
+
+\def\code#1{\texttt{\frenchspacing#1}}
+\def\padding{\vspace{0.5cm}}
+\def\spadding{\vspace{0.25cm}}
+\def\b{\textcolor{blue}}
+\def\r{\textcolor{red}}
+\def\o{\textcolor{gray}}
+\def\g#1{{\usebeamercolor[fg]{block title example}{#1}}}
+
+% fix for \pause in align
+\makeatletter
+\let\save@measuring@true\measuring@true
+\def\measuring@true{%
+    \save@measuring@true
+    \def\beamer@sortzero##1{\beamer@ifnextcharospec{\beamer@sortzeroread{##1}}{}}%
+    \def\beamer@sortzeroread##1<##2>{}%
+    \def\beamer@finalnospec{}%
+}
+\makeatother
+
+\usepackage[sorting=ynt,style=authoryear]{biblatex}
+\addbibresource{sources.bib}
+
+\title[Probabilistic Social Choice]{Probabilistic Social Choice \\ \small{(\cite{Brandl2015})}}
+\author{Jonas Hübotter}
+\date{November 23, 2021}
+
+\begin{document}
+
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% Uncomment these lines for an automatically generated outline.
+% \begin{frame}[allowframebreaks]{Outline}
+%     \tableofcontents[subsubsectionstyle=hide]
+% \end{frame}
+% \AtBeginSection[]
+%   {
+%      \begin{frame}
+%      \frametitle{Plan}
+%      \tableofcontents[currentsection, sectionstyle=show/hide, hideothersubsections]
+%      \end{frame}
+%   }
+
+\section{Introduction}
+
+\begin{frame}
+\begin{center}
+Ava, Ben, and Chloe want to go for lunch.\pause \\[10pt]
+
+Ava wants to go to Klara's Kitchen $\succ$ Mensa $\succ$ foodLAB.\par
+Ben wants to go to Mensa $\succ$ foodLAB $\succ$ Klara's Kitchen.\par
+Chloe wants to go to foodLAB $\succ$ Klara's Kitchen $\succ$ Mensa.\pause \\[10pt]
+
+So where to go?\pause \\[25pt]
+
+\large{Aggregating the preferences of individuals\par is the \b{problem of social choice}.}
+\end{center}
+\end{frame}
+
+\section{Deterministic Social Choice}
+
+\begin{frame}{Framework of Social Choice}
+Given \begin{itemize}
+    \item an \b{electorate} \g{(Ava, Ben, and Chloe)}\pause,
+    \item a set of \b{alternatives} $A\ \g{= \{\text{foodLAB}, \text{Klara's Kitchen}, \text{Mensa}\}}$\pause,
+    \item a \b{preference profile} $R$ over $A$\pause \\[8pt]
+        \begin{center}\begin{tabular}{ c|c|c }
+         $\nicefrac{1}{3}$ & $\nicefrac{1}{3}$ & $\nicefrac{1}{3}$ \\
+         \hline\hline
+         K & M & F \\
+         M & F & K \\
+         F & K & M \\
+        \end{tabular}\end{center}
+\end{itemize}\vspace{8pt}\pause
+
+find a \b{social choice function} $f : \mathcal{R}_A\only<5->{\footnote{$\mathcal{R}_A = \Delta(\mathcal{L}(A))$ is the set of all preference profiles over A.}} \to A$ that returns a single alternative\pause,
+
+\g{i.e., identifies a place for lunch that is in $A$.}
+\end{frame}
+
+\begin{frame}{Framework of Social Choice}
+
+\begin{center}\begin{tabular}{ c|c|c }
+ $\nicefrac{1}{3}$ & $\nicefrac{1}{3}$ & $\nicefrac{1}{3}$ \\
+ \hline\hline
+ K & M & F \\
+ M & F & K \\
+ F & K & M \\
+\end{tabular}\end{center}\vspace{10pt}
+
+$R(a \succ b)$ is the fraction of the electorate that prefers $a$ to $b$.\pause \\[10pt]
+
+\begin{center}
+\g{$R(K \succ M)\pause = \nicefrac{2}{3}$.}
+\end{center}
+\end{frame}
+
+\subsection{Condorcet Consistency}
+
+\begin{frame}{Framework of Social Choice}
+\begin{center}
+We do not just want \emph{some} social choice function,\par
+we want a \emph{good} social choice function.\pause \\[10pt]
+We need an \b{axiomatic characterization}.
+\end{center}\pause
+
+\begin{block}{Condorcet consistency}
+If $R(a \succ b) > \nicefrac{1}{2}$ for any $b \in A \setminus \{a\}$\pause, then $a$ is called a \b{Condorcet~winner}.\par\pause
+$f$ is \b{Condorcet consistent} if it always chooses the Condorcet winner provided one exists.
+\end{block}
+
+% \begin{block}{Weak Pareto Efficiency}
+% If $R(\text{Klara's Kitchen} \succ \text{Mensa})\only<4->{\footnote{$R(a \succ b)$ is the fraction of the electorate that prefers $a$ to $b$.}} = 1$,\pause\ then $f(R) \neq \text{Mensa}$.\par\pause
+% \g{We would be better off collectively by going to Klara's Kitchen.}
+% \end{block}\pause
+
+% \begin{block}{Monotonicty}
+% If $R(\text{Klara's Kitchen} \succ b) \leq R'(\text{Klara's Kitchen} \succ b)$,\pause\par
+% then $f(R) = \text{Klara's Kitchen}$ implies $f(R') = \text{Klara's Kitchen}$.\par\pause
+% \g{When we decide to go to Klara's Kitchen and the support for going there is increased, we should still go there.}
+% \end{block}
+\end{frame}
+
+\begin{frame}{Framework of Social Choice}
+\begin{center}\begin{tabular}{ c|c|c }
+ $\nicefrac{1}{3}$ & $\nicefrac{1}{3}$ & $\nicefrac{1}{3}$ \\
+ \hline\hline
+ K & M & F \\
+ M & F & K \\
+ F & K & M \\
+\end{tabular}\end{center}\pause
+
+The preferences of Ava, Ben, and Chloe do not yield a Condorcet~winner (known as the Condorcet paradox).\pause \\[20pt]
+
+\begin{center}
+\r{Many commonly used social choice functions are Condorcet~inconsistent.}\par\pause
+\small{(plurality, two-round runoff, instant runoff, Borda count)}
+\end{center}\pause\vspace{10pt}
+
+$\implies$ deterministic social choice functions are problematic
+\end{frame}
+
+\section{Probabilistic Social Choice}
+
+\begin{frame}{Probabilistic Social Choice}
+Instead of returning a single alternative, a \b{probabilistic social choice function} returns probability distributions (\b{lotteries}) over alternatives.\pause \\[10pt]
+
+Formally, $f : \mathcal{R}_A \to \mathcal{P}(\Delta(A))$ where $\Delta(A)$ is the set of lotteries over $A$.\pause
+
+\begin{example}[random dictatorship]
+Choose a preference relation among all preference relations uniformly at random, and choose its most-preferred alternative.
+
+\begin{center}\begin{tabular}{ c|c|c }
+ $\nicefrac{1}{3}$ & $\nicefrac{1}{3}$ & $\nicefrac{1}{3}$ \\
+ \hline\hline
+ \r{K} & \r{M} & \r{F} \\
+ \o{M} & \o{F} & \o{K} \\
+ \o{F} & \o{K} & \o{M} \\
+\end{tabular}\end{center}
+\end{example}
+\end{frame}
+
+\begin{frame}{Probabilistic Social Choice}
+\begin{block}{Requirements}
+\begin{itemize}\pause
+    \item when Ava goes to lunch on her own, she should choose Klara's~Kitchen with probability $1$ (\b{unanimity})\pause
+    \item when $f$ returns multiple lotteries for a preference profile, there is an "arbitrarily close" preference profile that only yields a single lottery (\b{decisiveness})
+\end{itemize}
+\end{block}\pause
+$\implies$ deterministic social choice functions are a special case of probabilistic social choice functions which only return \emph{degenerate} lotteries (i.e., lotteries that put all probability mass on a single alternative).
+\end{frame}
+
+\subsection{Population Consistency}
+
+\begin{frame}{Consistency Axioms}
+\begin{columns}
+\begin{column}{0.25\textwidth}
+\begin{center}\begin{table}\begin{tabular}{ c|c }
+ $\nicefrac{1}{2}$ & $\nicefrac{1}{2}$ \\
+ \hline\hline
+ K & M \\
+ M & F \\
+ F & K \\
+\end{tabular}\caption{$R'$}\end{table}\end{center}
+\end{column}
+\begin{column}{0.25\textwidth}
+\begin{center}\begin{table}\begin{tabular}{ c|c }
+ $\nicefrac{1}{2}$ & $\nicefrac{1}{2}$ \\
+ \hline\hline
+ K & M \\
+ F & F \\
+ M & K \\
+\end{tabular}\caption{$R''$}\end{table}\end{center}
+\end{column}\pause
+\begin{column}{0.5\textwidth}
+\begin{center}\begin{table}\begin{tabular}{ c|c|c }
+ $\nicefrac{1}{4}$ & $\nicefrac{1}{4}$ & $\nicefrac{1}{2}$ \\
+ \hline\hline
+ K & K & M \\
+ M & F & F \\
+ F & M & K \\
+\end{tabular}\caption{$\nicefrac{1}{2} R' + \nicefrac{1}{2} R'' = R$}\end{table}\end{center}
+\end{column}
+\end{columns}\pause
+
+\g{When $\nicefrac{1}{2}K + \nicefrac{1}{2}M$ is chosen by $R'$ and $R''$, then it must also be chosen by $R$.}\pause
+
+\begin{block}{Population Consistency}
+When two separate electorates $R'$ and $R''$ agree on a lottery, this lottery must also be chosen by a combination of the electorates.
+
+$\implies$ consistency with respect to a variable electorate
+\end{block}
+\end{frame}
+
+\subsection{Cloning Consistency}
+
+\begin{frame}{Consistency Axioms}
+Ben \emph{really} wants to go to Mensa so he devises an evil plan to confuse his friends.\pause\par
+Instead of proposing to go to Mensa, he introduces separate \b{clones} $B = \{M1, M2, \dots\}$ for table 1 at Mensa, table 2 at Mensa, ...\pause
+
+\begin{columns}
+\begin{column}{0.33\textwidth}
+\begin{center}\begin{table}\begin{tabular}{ c|c|c }
+ $\nicefrac{1}{3}$ & $\nicefrac{1}{3}$ & $\nicefrac{1}{3}$ \\
+ \hline\hline
+ K & M1 & F \\
+ M1 & M2 & K \\
+ M2 & F & M2 \\
+ F & K & M1 \\
+\end{tabular}\caption{$R$}\end{table}\end{center}
+\end{column}\pause
+\begin{column}{0.33\textwidth}
+\begin{center}\begin{table}\begin{tabular}{ c|c|c }
+ $\nicefrac{1}{3}$ & $\nicefrac{1}{3}$ & $\nicefrac{1}{3}$ \\
+ \hline\hline
+ K & M1 & F \\
+ M1 & F & K \\
+ F & K & M1 \\
+\end{tabular}\caption{$R|_{A'}$ \\ $A' = \{F, M1, K\}$}\end{table}\end{center}
+\end{column}
+\begin{column}{0.33\textwidth}
+\begin{center}\begin{table}\begin{tabular}{ c|c }
+ $\nicefrac{2}{3}$ & $\nicefrac{1}{3}$ \\
+ \hline\hline
+ M1 & M2 \\
+ M2 & M1 \\
+\end{tabular}\caption{$R|_B$ \\ $B = \{M1, M2\}$}\end{table}\end{center}
+\end{column}
+\end{columns}\pause
+
+\begin{block}{Cloning Consistency}
+We should assign the same probability to $M$ independently of the number of clones and the internal relationship between these clones.
+
+$\implies$ consistency with respect to components of \emph{similar} alternatives
+\end{block}
+\end{frame}
+
+\subsection{Composition Consistency}
+
+\begin{frame}{Consistency Axioms}
+\begin{columns}
+\begin{column}{0.33\textwidth}
+\begin{center}\begin{table}\begin{tabular}{ c|c|c }
+ $\nicefrac{1}{3}$ & $\nicefrac{1}{3}$ & $\nicefrac{1}{3}$ \\
+ \hline\hline
+ K & M1 & F \\
+ M1 & M2 & K \\
+ M2 & F & M2 \\
+ F & K & M1 \\
+\end{tabular}\caption{$R$}\end{table}\end{center}
+\end{column}
+\begin{column}{0.33\textwidth}
+\begin{center}\begin{table}\begin{tabular}{ c|c|c }
+ $\nicefrac{1}{3}$ & $\nicefrac{1}{3}$ & $\nicefrac{1}{3}$ \\
+ \hline\hline
+ K & M1 & F \\
+ M1 & F & K \\
+ F & K & M1 \\
+\end{tabular}\caption{$R|_{A'}$ \\ $A' = \{F, M1, K\}$}\end{table}\end{center}
+\end{column}
+\begin{column}{0.33\textwidth}
+\begin{center}\begin{table}\begin{tabular}{ c|c }
+ $\nicefrac{2}{3}$ & $\nicefrac{1}{3}$ \\
+ \hline\hline
+ M1 & M2 \\
+ M2 & M1 \\
+\end{tabular}\caption{$R|_B$ \\ $B = \{M1, M2\}$}\end{table}\end{center}
+\end{column}
+\end{columns}
+
+\g{$f$ should assign more probability to $M1$ than to $M2$.}\pause
+
+\begin{block}{Composition Consistency (extending cloning consistency)}
+The probability of clones must be directly proportional to the probabilities that $f$ assigns to these alternatives for $R|_B$.
+\end{block}
+\end{frame}
+
+\section{Results}
+
+\begin{frame}{Results}
+Deterministic social choice functions \r{cannot} satisfy \begin{itemize}
+    \item Condorcet consistency and population consistency\pause
+    \item population consistency and composition consistency
+\end{itemize}\pause\vspace{10pt}
+
+What about probabilistic social choice functions?
+\begin{itemize}
+    \item random dictatorships satisfy population consistency and cloning consistency\pause
+    \item \emph{maximal lotteries} satisfy population consistency and composition consistency (and Condorcet consistency)\par(\cite{Brandl2015})
+\end{itemize}
+\end{frame}
+
+\section{Interpretation}
+
+\begin{frame}{Interpretation}
+\blockquote{Sometimes, in fact, we want to exclude reasons from decision‐making entirely. This is what lotteries can do.}\par(\cite{Stone2011})\pause\vspace{10pt}
+
+This does not entail that decisions must lack rationale, but rather that the aggregation happens randomly and as such is harder to exploit.\pause \\[20pt]
+
+Amidst which circumstances are random choices useful?\pause
+\begin{itemize}
+    \item depending on the risk aversion of voters, and
+    \item the effective degree of randomness.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Acceptability of Lotteries}
+\begin{block}{Risk Aversion}
+Typically, the risk aversion depends on
+\begin{itemize}
+    \item the stakes of the decision\pause, and
+    \item the frequency of preference aggregation.
+\end{itemize}\pause
+
+If preferences are aggregated rarely the law of large numbers does not apply and a risk-averse voter might prefer a sure outcome to a random outcome even if in expectation she prefers the random outcome.
+\end{block}\pause\vspace{10pt}
+
+In the Athenian democracy, lotteries were a principal component. The process of selecting candidates by a lottery for a political office is also known as \emph{sortition} or \emph{selection by lot}.
+\end{frame}
+
+\begin{frame}{Acceptability of Lotteries}
+\begin{block}{Effective Degree of Randomness}
+What to do about ties? Are ties rare or common?\pause \\[15pt]
+
+\g{Condorcet view:} we encounter a tie iff there is no Condorcet~winner, i.e., no unequivocal winner.\pause \\[5pt]
+It can be shown that Condorcet's view of equivocality and the randomness of maximal lotteries coincide.\footnote{Maximal lotteries are degenerate iff there is a Condercet winner.}\pause \\[15pt]
+
+Empirically, there often exists a Condorcet winner. If there exists no Condorcet winner, the support of maximal lotteries is typically small compared to the number of alternatives.
+\end{block}
+\end{frame}
+
+\begin{frame}{Acceptability of Lotteries}
+\blockquote{A political system, such as the one in the United States, which
+ rules out lotteries might lead to dominance by the center, even if
+ the right and left could put together a majority coalition that would
+ prefer a lottery on the extremes to a middle outcome. (\cite{Zeckhauser1969})}\pause
+
+In general, majority rule without lotteries corrects towards the median choice.\par
+This can be considered inefficient or desirable. The judgement may depend on the setting.
+\end{frame}
+
+\begin{frame}{An Alternative Interpretation}
+We have been thinking about lotteries as probability distributions over alternatives, used to obtain a single (or multiple) choices.\pause
+
+\begin{example}
+Consider a firm that asks its employees to spend a fixed budget on non-profits of their choice. How can we come up with a fair allocation of the budget?
+\end{example}\pause
+
+\begin{center}
+    \large{Probabilities can equivalently be interpreted as fractions of a divisible resource such as money or time.}
+\end{center}
+\end{frame}
+
+\section{Discussion}
+
+\begin{frame}
+\large{\begin{center}
+\g{Thank you for your attention} \\ [25pt]
+
+How often do preferences have to be (repeatedly) aggregated until lotteries become acceptable? \\[10pt]
+
+Is randomness in decision making at all acceptable?\par Is it desirable?
+\end{center}}
+\end{frame}
+
+\begin{frame}[allowframebreaks]{References}
+\nocite{*}
+\printbibliography
+\end{frame}
+
+\begin{frame}{The Inefficiency of Majority Rule without Lotteries}
+\blockquote{The 101 Club must choose a single form of entertainment for
+ all club members. The membership rolls contain fifty football
+ fanatics, fifty ballet aficionados, and a single lover of musical
+ comedy. For the footballers the musical is almost as bad as the
+ ballet. For the ballet enthusiasts the musical is little better than
+ football. By majority rule, using pairwise comparisons without
+ lotteries, the musical will be chosen. If lotteries were permitted, a
+ fifty-fifty football-ballet lottery would defeat the musical by any
+ required plurality up to 100 out of 101. (\cite{Zeckhauser1969})}
+\end{frame}
+
+\end{document}
