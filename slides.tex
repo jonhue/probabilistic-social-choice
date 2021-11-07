@@ -38,6 +38,7 @@
 \usepackage{caption}
 \usepackage{nicefrac}
 \usepackage{tikz}
+\usepackage{appendixnumberbeamer}
 
 \captionsetup{labelformat=empty}
 
@@ -220,7 +221,7 @@ The preferences of Ava, Ben, and Chloe do not yield a Condorcet~winner (known as
 \small{(plurality, two-round runoff, instant runoff, Borda count)}
 \end{center}\pause\vspace{10pt}
 
-$\implies$ deterministic social choice functions are problematic
+$\rightsquigarrow$ deterministic social choice functions are problematic
 \end{frame}
 
 \section{Probabilistic Social Choice}
@@ -250,7 +251,7 @@ Choose a preference relation among all preference relations uniformly at random,
     \item when $f$ returns multiple lotteries for a preference profile, there is an "arbitrarily close" preference profile that only yields a single lottery (\b{decisiveness})
 \end{itemize}
 \end{block}\pause
-$\implies$ deterministic social choice functions are a special case of probabilistic social choice functions which only return \emph{degenerate} lotteries (i.e., lotteries that put all probability mass on a single alternative).
+$\rightsquigarrow$ deterministic social choice functions are a special case of probabilistic social choice functions which only return \emph{degenerate} lotteries (i.e., lotteries that put all probability mass on a single alternative).
 \end{frame}
 
 \subsection{Population Consistency}
@@ -291,7 +292,7 @@ $\implies$ deterministic social choice functions are a special case of probabili
 \begin{block}{Population Consistency}
 When two separate electorates $R'$ and $R''$ agree on a lottery, this lottery must also be chosen by a combination of the electorates.
 
-$\implies$ consistency with respect to a variable electorate
+$\rightsquigarrow$ consistency with respect to a variable electorate
 \end{block}
 \end{frame}
 
@@ -334,7 +335,7 @@ Instead of proposing to go to Mensa, he introduces separate \b{clones} $B = \{M1
 \begin{block}{Cloning Consistency}
 We should assign the same probability to $M$ independently of the number of clones and the internal relationship between these clones.
 
-$\implies$ consistency with respect to components of \emph{similar} alternatives
+$\rightsquigarrow$ consistency with respect to components of \emph{similar} alternatives
 \end{block}
 \end{frame}
 
@@ -381,6 +382,8 @@ The probability of clones must be directly proportional to the probabilities tha
 \section{Results}
 
 \begin{frame}{Results}
+We have seen that \emph{Condorcet consistency}, \emph{population consistency}, and \emph{composition consistency} arise as natural axioms.\pause \\[15pt]
+
 Deterministic social choice functions \r{cannot} satisfy \begin{itemize}
     \item Condorcet consistency and population consistency\pause
     \item population consistency and composition consistency
@@ -390,7 +393,9 @@ What about probabilistic social choice functions?
 \begin{itemize}
     \item random dictatorships satisfy population consistency and cloning consistency\pause
     \item \emph{maximal lotteries} satisfy population consistency and composition consistency (and Condorcet consistency)\par(\cite{Brandl2015})
-\end{itemize}
+\end{itemize}\pause
+
+$\rightsquigarrow$ maximal lotteries settle a dispute between the founding fathers of social choice theory, Chevalier~de~Borda and Marquis~de~Condorcet.
 \end{frame}
 
 \section{Interpretation}
@@ -466,6 +471,8 @@ Is randomness in decision making at all acceptable?\par Is it desirable?
 \end{center}}
 \end{frame}
 
+\appendix
+
 \begin{frame}[allowframebreaks]{References}
 \nocite{*}
 \printbibliography
@@ -481,6 +488,71 @@ Is randomness in decision making at all acceptable?\par Is it desirable?
  lotteries, the musical will be chosen. If lotteries were permitted, a
  fifty-fifty football-ballet lottery would defeat the musical by any
  required plurality up to 100 out of 101. (\cite{Zeckhauser1969})}
+\end{frame}
+
+\begin{frame}{Maximal Lotteries}
+For a set of alternatives $A$ and preference profile $R \in \mathcal{R}_A$, let $M_R$ be the \b{majority margin matrix} defined by \begin{align*}
+    M_R(x,y) = R(x \succ y) - R(y \succ x).
+\end{align*}\pause \g{$M_R(x,y)$ denotes the difference between the fraction of voters preferring $x$ to $y$ and the fraction of voters preferring $y$ to $x$.}\pause\par\g{$\rightsquigarrow M_R$ is skew-symmetric}\pause \\[10pt]
+Any $x \in A$ such that $M_R(x,y) \geq 0$ for all $y \in A$ is a \emph{(weak)~Condorcet~winner}.\pause\par
+Any $x \in A$ such that $M_R(x,y) > 0$ for all $y \in A \setminus \{x\}$ is a \emph{strict~Condorcet~winner}.
+\end{frame}
+
+\begin{frame}{Maximal Lotteries}
+We fix two lotteries $p, q \in \Delta(A)$.\pause\par
+For $p$ and $q$, the majority margin $M_R$ can be extended to the \b{expected majority margin} $p^T M_R q$.\pause\par
+The set of maximal lotteries is then the set of \emph{probabilistic Condorcet winners}\pause: \begin{align*}
+    ML(R) = \{p \in \Delta(A)\pause \mid \forall q \in \Delta(A)\pause.\ p^T M_R q \geq 0\}.
+\end{align*}\pause
+
+\begin{block}{Interpretation in the Context of Game Theory}\pause
+Let $M_R$ be the payoff matrix of a symmetric zero-sum game.\pause\ Lotteries in social choice theory correspond to mixed strategies in game theory.\pause\par
+Then, maximal lotteries correspond to the mixed Nash equilibria (i.e., maximin strategies).\pause\par
+$\rightsquigarrow$ efficient computation using linear programming.
+\end{block}
+\end{frame}
+
+\begin{frame}{Maximal Lotteries}
+\begin{example}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{center}\begin{table}\begin{tabular}{ c|c|c } 
+ $\nicefrac{1}{2}$ & $\nicefrac{1}{3}$ & $\nicefrac{1}{6}$ \\ 
+ \hline\hline
+ $a$ & $a$ & $b$ \\ 
+ $b$ & $c$ & $c$ \\ 
+ $c$ & $b$ & $a$ \\
+\end{tabular}\caption{$R$}\end{table}\end{center}
+\end{column}\pause
+\begin{column}{0.5\textwidth}
+\begin{align*}
+    M_R = \bordermatrix{ & \g{a} & \g{b} & \g{c} \cr
+      \g{a} & 0 & \nicefrac{1}{3} & \nicefrac{1}{3} \cr
+      \g{b} & -\nicefrac{1}{3} & 0 & \nicefrac{1}{3} \cr
+      \g{c} & -\nicefrac{1}{3} & -\nicefrac{1}{3} & 0 } \qquad \\
+\end{align*}
+\end{column}
+\end{columns}\pause
+
+Clearly, $a$ is the only Nash equilibrium of the symmetric zero-sum game, so $ML(R) = \{a\}$ \g{($a$ is also the Condorcet winner)}.\pause\par
+Note that a random dictatorship returns the lottery $\nicefrac{5}{6} a + \nicefrac{1}{6} b$.
+\end{example}
+\end{frame}
+
+\begin{frame}{Randomness of Maximal Lotteries for Two Alternatives}
+Let $A = \{x, y\}$ and $R \in \mathcal{R}_A$.\pause
+
+\begin{align*}
+    ML(R) = \begin{cases}
+        \{x\} & \text{if } R(x \succ y) > \nicefrac{1}{2} \\
+        \{y\} & \text{if } R(x \succ y) < \nicefrac{1}{2} \\
+        \Delta(A) & \text{otherwise}
+    \end{cases}
+\end{align*}\pause
+
+In contrast, a random dictatorship returns the lottery $R(x \succ y) x + R(y \succ x) y$.\pause \\ [10pt]
+
+$\rightsquigarrow$ in a way, maximal lotteries have the smallest reasonable degree of randomness while random dictatorships are the most random.
 \end{frame}
 
 \end{document}
