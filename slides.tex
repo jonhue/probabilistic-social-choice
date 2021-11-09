@@ -38,6 +38,7 @@
 \usepackage{caption}
 \usepackage{nicefrac}
 \usepackage{tikz}
+\usepackage{pgf-pie}
 \usepackage{appendixnumberbeamer}
 
 \captionsetup{labelformat=empty}
@@ -146,7 +147,6 @@ $R(a \succ b)$ is the fraction of the electorate that prefers $a$ to $b$.\pause 
     \g{R(M \succ F)}\ &\g{=\pause \nicefrac{2}{3}} &\\
     \g{R(F \succ K)}\ &\g{=\pause \nicefrac{2}{3}} &
 \end{flalign*}
-
 \end{column}
 \end{columns}
 \end{example}
@@ -158,13 +158,34 @@ $R(a \succ b)$ is the fraction of the electorate that prefers $a$ to $b$.\pause 
 \begin{center}
 We do not just want \emph{some} social choice function,\par
 we want a \emph{good} social choice function.\pause \\[10pt]
-We need an \b{axiomatic characterization}.
+We need an \emph{axiomatic characterization}.
 \end{center}\pause
 
 \begin{block}{Condorcet consistency}
-If $R(a \succ b) > \nicefrac{1}{2}$ for any $b \in A \setminus \{a\}$\pause, then $a$ is called a \b{Condorcet~winner}.\par\pause
+If $R(a \succ b) > \nicefrac{1}{2}$ for any $b \in A \setminus \{a\}$\pause, then $a$ is called the \b{Condorcet~winner}.\par\pause
 $f$ is \b{Condorcet consistent} if it always chooses the Condorcet winner provided one exists.
-\end{block}
+\end{block}\pause
+
+\begin{example}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{center}\begin{tabular}{ c|c } 
+ $\nicefrac{2}{3}$ & $\nicefrac{1}{3}$ \\ 
+ \hline\hline
+ K & F \\ 
+ M & K \\ 
+ F & M \\
+\end{tabular}\end{center}
+\end{column}\pause
+\begin{column}{0.5\textwidth}
+\begin{align*}
+    \g{R(K \succ M)}\ &\g{= 1} \\
+    \g{R(K \succ F)}\ &\g{= \nicefrac{2}{3}}
+\end{align*}
+$\rightsquigarrow K$ is the Condorcet winner
+\end{column}
+\end{columns}
+\end{example}
 
 % \begin{block}{Weak Pareto Efficiency}
 % If $R(\text{Klara's Kitchen} \succ \text{Mensa})\only<4->{\footnote{$R(a \succ b)$ is the fraction of the electorate that prefers $a$ to $b$.}} = 1$,\pause\ then $f(R) \neq \text{Mensa}$.\par\pause
@@ -452,7 +473,31 @@ This can be considered inefficient or desirable. The judgement may depend on the
 We have been thinking about lotteries as probability distributions over alternatives, used to obtain a single (or multiple) choices.\pause
 
 \begin{example}
-Consider a firm that asks its employees to spend a fixed budget on non-profits of their choice. How can we come up with a fair allocation of the budget?
+Consider a firm that asks its employees to spend a fixed budget on non-profits of their choice. How can we come up with a fair allocation of the budget?\pause\vspace{-20pt}
+\begin{columns}
+\begin{column}{3cm}
+\begin{align*}
+    0.4 a + 0.25 b + 0.35 c
+\end{align*}
+\end{column}
+\begin{column}{1cm}
+\begin{align*}
+    \Large{\rightsquigarrow}
+\end{align*}
+\end{column}
+\begin{column}{2.5cm}
+\begin{figure}
+\centering
+\resizebox{2.5cm}{!}{%
+\begin{tikzpicture}
+\pie{40/a,
+    25/b,
+    35/c}
+\end{tikzpicture}%
+}
+\end{figure}
+\end{column}
+\end{columns}
 \end{example}\pause
 
 \begin{center}
